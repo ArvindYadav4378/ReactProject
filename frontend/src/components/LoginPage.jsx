@@ -1,6 +1,7 @@
-
 import React, { useState } from "react";
-import {  } from "module";
+import { useApi } from "../utilities/utilities";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -8,9 +9,10 @@ const LoginPage = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   let allUsers = useApi("/users");
   console.log(allUsers);
-  
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -22,33 +24,33 @@ const LoginPage = () => {
     console.log("Form Submitted");
     console.log(formData);
 
-    let authUser = allUsers.find((singleUser)=> {
+    let authUser = allUsers.find((singleUser) => {
       return (
         singleUser.email === formData.email &&
         singleUser.password === formData.password
       );
     });
+
     console.log(authUser);
 
     if (authUser) {
-      //toast message
-      toast.success("Login Successful")
+      // toast message
+      toast.success("Login Successful");
 
-      //navigate Home.jsx
-      Navigate("/home")
+      // navigate Home.jsx
+      navigate("/home");
 
       // store token in localStorage
-      localStorage.setItem("accesstoken" ,Date.now())
-    }else{
-      toast.error("Invalid credential")
+      localStorage.setItem("accesstoken", Date.now());
+    } else {
+      toast.error("Invalid credentials");
     }
-
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300">
+    <div className="min-h-screen flex items-center justify-center ">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
-        <h1 className="font-bold text-4xl text-center text-blue-700 mb-4">
+        <h1 className="font-bold text-4xl text-center text-black mb-4">
           Login
         </h1>
         <form>
@@ -60,7 +62,7 @@ const LoginPage = () => {
               Email
             </label>
             <input
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black transition"
               type="email"
               name="email"
               id="email"
@@ -79,7 +81,7 @@ const LoginPage = () => {
               Password
             </label>
             <input
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black transition"
               type="password"
               name="password"
               id="password"
@@ -91,7 +93,7 @@ const LoginPage = () => {
           </div>
           <button
             onClick={login}
-            className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg shadow hover:bg-blue-700 transition"
+            className="w-full bg-black text-white font-semibold py-2 rounded-lg shadow  transition"
           >
             Login
           </button>

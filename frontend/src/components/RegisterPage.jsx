@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { AxiosInstance } from "../routes/axiosInstance";
-
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +10,8 @@ const RegisterPage = () => {
     password: "",
     confirmpassword: "",
   });
+
+  let navigate = useNavigate()
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -49,6 +50,9 @@ const RegisterPage = () => {
       console.log(response);
 
       toast.success("Signup Successfully");
+      
+      // navigate to Login.jsx
+      navigate("/login")
 
       // reset form fields
       setFormData({
@@ -56,7 +60,8 @@ const RegisterPage = () => {
         email: "",
         password: "",
         confirmpassword: "",
-      });
+      })
+
     } catch (error) {
       toast.error("Unable to register");
       console.log(error);
