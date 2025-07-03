@@ -1,7 +1,12 @@
-import { Link } from "react-router-dom";
+import { IoCart } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Avatar from "@mui/material/Avatar";
+import CartDrawer from "./CartDrawer";
 
 const Navbar = () => {
   let accesstoken = localStorage.getItem("accesstoken");
+  let navigate = useNavigate();
 
   const categories = [
     {
@@ -30,26 +35,52 @@ const Navbar = () => {
     },
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem("accesstoken");
+    toast.success("logged out");
+    navigate("/login");
+  };
+
+  function stringAvatar(name) {
+    return {
+      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    };
+  }
+
   return (
     <nav className="absolute top-0 h-[70px] w-full bg-white flex items-center justify-between px-6 shadow z-50">
       <div className="font-extrabold text-3xl text-black   select-none">
         MyApp
       </div>
 
-      <aside className="flex gap-4 font-semibold w-[70%] justify-between">
+      {accesstoken ? (
+        <>
+          <section className="flex gap-2">
+            {categories.map((ele) => {
+              return (
+                <div key={ele.id} className="p-4 font-semibold">
+                  {ele.title}
+                </div>
+              );
+            })}
+          </section>
+        </>
+      ) : null}
+
+      <aside className="flex gap-4 font-semibold">
         {accesstoken ? (
           <>
-            <section className="flex gap-2">
-              {categories.map((ele) => {
-                return (
-                  <div key={ele.id} className="p-4 font-semibold">
-                    {ele.title}
-                  </div>
-                );
-              })}
-            </section>
+            <button>
+              <CartDrawer/>
+            </button>
 
-            <button className="bg-black py-2 px-6 rounded text-white cursor-pointer hover:bg-gray-200 hover:border hover:text-black">
+     
+            <Avatar sx={{ bgcolor: "black" }} {...stringAvatar("Arvind Yadav")} />
+
+            <button
+              onClick={handleLogout}
+              className="bg-black py-2 px-6 rounded text-white cursor-pointer hover:bg-gray-200 hover:border hover:text-black"
+            >
               Logout
             </button>
           </>

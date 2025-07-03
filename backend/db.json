@@ -48,6 +48,13 @@
       "email": "ay846993@gmai.com",
       "password": "0000000000",
       "confirmpassword": "0000000000"
+    },
+    {
+      "id": "a7f8",
+      "username": "Anirudh Yadav",
+      "email": "ani@gmail.com",
+      "password": "00000000",
+      "confirmpassword": "00000000"
     }
   ]
 }
